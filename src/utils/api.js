@@ -1,26 +1,39 @@
 import axios from 'axios';
 
-const apiURL = 'https://api.evankemp.com/';
+const apiURL = 'https://api.evankemp.com';
 
 //// Testing URL
 
 // const apiURL = 'http://localhost:5000/ek-would-you-rather/us-central1/app';
 
+/**  Gets both users and questions
+ * @returns {Promise} Returns a promise with users and questions obj.
+ * */
+export function getInitialData() {
+    return Promise.all([
+        get_users(),
+        getQuestions()
+    ]).then(([users, questions]) => ({
+        users,
+        questions
+    }))
+}
+
 /** Gets list of users from the database
-* @returns {Promise} Returns a promise that allows manipulation of the data returned.
-* */
+ * @returns {Promise} Returns a promise that allows manipulation of the data returned.
+ * */
 export function get_users() {
     return axios.get(`${apiURL}/getUsers`)
-        .then(res => res.data.success ? res.data.result : Promise.reject(res.data.message))
+        .then(res => res.data.success ? res.data.users : Promise.reject(res.data.message))
         .catch(err => console.log(err))
 }
 
 /** Gets list of Questions from the database
-* @returns {Promise} Returns a promise that allows manipulation of the data returned.
-* */
+ * @returns {Promise} Returns a promise that allows manipulation of the data returned.
+ * */
 export function getQuestions() {
     return axios.get(`${apiURL}/getQuestions`)
-        .then(res => res.data.success ? res.data.result : Promise.reject(res.data.message))
+        .then(res => res.data.success ? res.data.questions : Promise.reject(res.data.message))
         .catch(err => console.log(err))
 }
 
@@ -36,7 +49,6 @@ export function saveQuestion(author, optionOneText, optionTwoText) {
         optionOneText,
         optionTwoText
     }).then(res => res.data.success ? res.data.question : Promise.reject(res.data.message))
-        .catch(err => console.log(err))
 }
 
 /** Save an answer to the question
@@ -50,5 +62,4 @@ export function answerQuestion(question) {
     return axios.post(`${apiURL}/answer`, {
         question: question
     }).then(res => res.data.success ? res.data.result : Promise.reject(res.data.message))
-        .catch(err => console.log('Error: ', err))
 }

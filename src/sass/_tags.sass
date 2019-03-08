@@ -1,0 +1,40 @@
+@import "mixins"
+
+body
+  background-color: #ECEFF1
+  font-weight: 400
+  padding: 0
+  margin: 0
+
+body, h1, h2, h2, h3, h4, h5, h6
+  font-family: "Open Sans", sans-serif
+
+h3, h4, h5, h6
+  font-weight: 400
+
+h2
+    color: #ffa100
+
+h2, h3
+  text-align: center
+
+a
+  color: #000
+  text-decoration: none
+
+  &:hover
+    text-decoration: underline
+
+a.active
+  color: #00cc00
+  cursor: default
+
+  &:hover
+    text-decoration: none
+
+button.is-positive
+  @include button('positive')
+
+button.is-negative
+  @include button('negative')
+

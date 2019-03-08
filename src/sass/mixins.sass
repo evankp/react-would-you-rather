@@ -1,0 +1,20 @@
+@mixin button($type)
+  @if $type == 'positive'
+    background-color: #00cc00
+
+  @else if $type == 'negative'
+    background-color: #cc0700
+
+  border: none
+  color: #ffffff
+  border-radius: 5px
+  padding: 10px
+
+  &:hover
+    @if $type == 'positive'
+      background-color: darken(#00cc00, 1.5)
+      cursor: pointer
+
+    @if $type == 'negative'
+      background-color: darken(#cc0700, 1.5)
+      cursor: pointer
