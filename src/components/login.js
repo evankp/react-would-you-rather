@@ -12,6 +12,7 @@ class Login extends React.Component {
         e.preventDefault();
         this.setState({userSelect: this.select.value}, () => {
             this.props.dispatch(setAuthedUser(this.state.userSelect));
+            sessionStorage.setItem('loggedUser', this.state.userSelect)
         })
     };
 

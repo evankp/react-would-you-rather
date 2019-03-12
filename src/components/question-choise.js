@@ -1,34 +1,39 @@
 import React from 'react'
 import {answerQuestion} from "../actions/questions";
-import Proptypes from 'prop-types'
+import PropTypes from 'prop-types'
+import {withRouter} from "react-router-dom";
 
-function submitAnswer(e, selection, props) {
-    const {question, authedUser, dispatch} = props;
+class Choice extends React.Component {
+    static propTypes = {
+        choice: PropTypes.string.isRequired,
+        question: PropTypes.object.isRequired,
+        dispatch: PropTypes.func.isRequired,
+        authedUser: PropTypes.string.isRequired
+    };
 
-    e.preventDefault();
+    submitAnswer = (e, selection) => {
+        const {question, authedUser, dispatch} = this.props;
 
-    dispatch(answerQuestion(question.id, selection, authedUser))
+        e.preventDefault();
+
+        dispatch(answerQuestion(question.id, selection, authedUser));
+
+        this.props.history.push(`/result/${question.id}`)
+    };
+
+    render() {
+        const {question, choice} = this.props;
+        const option = choice === 'A' ? 'optionOne' : 'optionTwo';
+
+        return (
+            <div className="answer">
+                <h3>{question[option].text}</h3>
+                <button className={choice === 'A' ? 'is-positive' : 'is-negative'}
+                        onClick={e => this.submitAnswer(e, option)}>Choose
+                </button>
+            </div>
+        )
+    }
 }
 
-const Choice = props => {
-    const {question, choice} = props;
-    const option = choice === 'A' ? 'optionOne' : 'optionTwo';
-
-    return (
-        <div className="answer">
-            <h3>{question[option].text}</h3>
-            <button className={choice === 'A' ? 'is-positive' : 'is-negative'}
-                    onClick={e => submitAnswer(e, option, props)}>Choose
-            </button>
-        </div>
-    )
-};
-
-Choice.propTypes = {
-    choice: Proptypes.string.isRequired,
-    question: Proptypes.object.isRequired,
-    dispatch: Proptypes.func.isRequired,
-    authedUser: Proptypes.string.isRequired
-};
-
-export default Choice
+export default withRouter(Choice)

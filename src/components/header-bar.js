@@ -7,7 +7,8 @@ import {clearAuthedUser} from "../actions/users";
 class HeaderBar extends React.Component {
     handleLogout = e => {
       e.preventDefault();
-      this.props.dispatch(clearAuthedUser())
+      this.props.dispatch(clearAuthedUser());
+      sessionStorage.removeItem('loggedUser')
     };
 
     render() {

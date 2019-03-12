@@ -5,12 +5,21 @@ import LoadingBar from "react-redux-loading";
 
 import {getInitialData} from "./actions";
 
-import Login from './components/login'
-import Dashboard from './components/dashboard'
+import Login from './components/login';
+import Dashboard from './components/dashboard';
+import Result from './components/result';
+import {setAuthedUser} from "./actions/users";
 
 class App extends React.Component {
     componentDidMount() {
         this.props.dispatch(getInitialData());
+        this.getSessionStoredUser()
+    };
+
+    getSessionStoredUser = () => {
+      let loggedUser = sessionStorage.getItem('loggedUser');
+
+      if (loggedUser) this.props.dispatch(setAuthedUser(loggedUser))
     };
 
     render() {
@@ -21,14 +30,16 @@ class App extends React.Component {
                     <LoadingBar/>
                     {this.props.loading
                         ? null
-                        : <div>
+                        : <Fragment>
                             <Route exact path='/' component={authedUser ? Dashboard : Login}/>
+                            {/*<Route path='/new' component={authedUser ? Dashboard : Login}/>*/}
+                            <Route path='/result/:id' component={Result}/>
 
                             {/* Credit text for avatar icons*/}
                             <div className="credit-text">Avatar icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik </a>
                                 from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> is licensed by
                                 <a href="http://creativecommons.org/licenses/by/3.0/"title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer"> CC 3.0 BY</a></div>
-                        </div>
+                        </Fragment>
                     }
                 </Fragment>
             </Router>
@@ -36,9 +47,9 @@ class App extends React.Component {
     }
 }
 
-function mapStatetoProps({authedUser, users, questions}) {
+function mapStatetoProps({authedUser, users, loadingBar}) {
     return {
-        loading: users === {},
+        loading: loadingBar.default,
         authedUser,
         users
     }

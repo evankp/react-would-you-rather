@@ -1,5 +1,4 @@
 import {GET_QUESTIONS, REMOVE_VOTE, UPDATE_VOTES} from "../reducers/questions";
-import {showLoading} from "react-redux-loading";
 import * as API from '../utils/api'
 
 export function getQuestions(questions) {
