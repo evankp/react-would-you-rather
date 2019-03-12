@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
         const {dispatch, authedUser, questionAuthor, users, questions, randomQuestion, match: {path, params}} = this.props;
         const user = users[authedUser];
 
-        const question = path.includes('/result') ? questions[params.id] : randomQuestion
+        const question = path.includes('/result') ? questions[params.id] : randomQuestion;
 
         return (
             <div className="box full-sized">
