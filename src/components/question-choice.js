@@ -24,7 +24,6 @@ class Choice extends React.Component {
     render() {
         const {question, choice, match: {path}} = this.props
         const option = choice === 'A' ? 'optionOne' : 'optionTwo'
-        const optionObj = choice === 'A' ? question.optionOne : question.optionTwo
 
         return (
             <div className="answer">
@@ -36,7 +35,7 @@ class Choice extends React.Component {
                 )}
 
                 {path.includes('/result') && (
-                    <h3>{optionObj.votes ? optionObj.votes.length : 0}</h3>
+                    <h3>{question[option].votes ? question[option].votes.length : 0}</h3>
                 )}
             </div>
         )

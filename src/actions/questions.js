@@ -30,7 +30,6 @@ export const answerQuestion = (id, selection, authedUser) => dispatch => {
     dispatch(updateVotes(id, selection, authedUser));
 
     return API.answerQuestion({id, answer: selection, authedUser})
-        .then(res => console.log(res))
         .catch(err => {
             dispatch(removeVote(id, selection, authedUser));
             console.log('Error: ', err)

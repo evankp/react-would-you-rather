@@ -20,6 +20,7 @@ export default function questions(state = {}, action) {
                 [action.id]: {
                     ...state[action.id],
                     [action.option]: {
+                        ...option,
                         votes: option.votes ? [...option.votes, action.user] : [action.user]
                     }
                 }
