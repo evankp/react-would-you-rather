@@ -33,7 +33,7 @@ class App extends React.Component {
                         : <Fragment>
                             <Route exact path='/' component={authedUser ? Dashboard : Login}/>
                             {/*<Route path='/new' component={authedUser ? Dashboard : Login}/>*/}
-                            <Route path='/result/:id' component={Result}/>
+                            <Route path='/result/:id' component={authedUser ? Dashboard : Login}/>
 
                             {/* Credit text for avatar icons*/}
                             <div className="credit-text">Avatar icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik </a>

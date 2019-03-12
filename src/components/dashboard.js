@@ -2,13 +2,16 @@ import React, {Fragment} from 'react';
 import {connect} from "react-redux";
 
 import HeaderBar from './header-bar'
-import Choice from "./question-choise";
+import Choice from "./question-choice";
 
 const sample = require('lodash.sample');
 
 class Dashboard extends React.Component {
     render() {
-        const {question, dispatch, authedUser, questionAuthor, user} = this.props;
+        const {dispatch, authedUser, questionAuthor, users, questions, randomQuestion, match: {path, params}} = this.props;
+        const user = users[authedUser];
+
+        const question = path.includes('/result') ? questions[params.id] : randomQuestion
 
         return (
             <div className="box full-sized">
@@ -48,7 +51,7 @@ class Dashboard extends React.Component {
     }
 }
 
-function mapStateToProps({authedUser, users, questions}) {
+function mapStateToProps({authedUser, users, questions}, ownProps) {
     function getRandomQuestion() {
         let questionIds = Object.keys(questions);
         let unansweredQuestions = questionIds.filter(id => {
@@ -63,11 +66,10 @@ function mapStateToProps({authedUser, users, questions}) {
     let randomQuestion = getRandomQuestion();
 
     return {
-        user: users[authedUser],
         authedUser,
         users,
-        question: randomQuestion,
-        questionAuthor: randomQuestion ? users[randomQuestion.author] : undefined
+        questions,
+        randomQuestion: randomQuestion,
     }
 }
 

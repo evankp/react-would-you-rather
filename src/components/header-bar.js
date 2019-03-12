@@ -12,7 +12,7 @@ class HeaderBar extends React.Component {
     };
 
     render() {
-        const {user} = this.props;
+        const user = this.props.users[this.props.authedUser]
         return (
             <nav>
                 <ul>
@@ -34,8 +34,8 @@ class HeaderBar extends React.Component {
 
 function mapStateToProps({authedUser, users}) {
     return {
-        user: users[authedUser],
-        users
+        users,
+        authedUser
     }
 }
 
