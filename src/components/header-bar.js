@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom'
 
 import {NavLink} from "react-router-dom";
 import {clearAuthedUser} from "../actions/users";
@@ -39,4 +40,4 @@ function mapStateToProps({authedUser, users}) {
     }
 }
 
-export default connect(mapStateToProps)(HeaderBar)
+export default withRouter(connect(mapStateToProps)(HeaderBar))

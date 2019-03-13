@@ -7,7 +7,6 @@ import {getInitialData} from "./actions";
 
 import Login from './components/login';
 import Dashboard from './components/dashboard';
-import Result from './components/result';
 import {setAuthedUser} from "./actions/users";
 
 class App extends React.Component {

@@ -45,6 +45,13 @@ class Dashboard extends React.Component {
                             </Fragment>
                             : <span className="answer">No Questions Found</span>}
                     </article>
+                    {path.includes('/result') && (
+                        <div className="center">
+                            <button className="is-positive" onClick={() => this.props.history.push('/')}>
+                                New Question
+                            </button>
+                        </div>
+                    )}
                 </section>
             </div>
         )
