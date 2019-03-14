@@ -7,7 +7,9 @@ import {getInitialData} from "./actions";
 
 import Login from './components/login';
 import Dashboard from './components/dashboard';
-import {setAuthedUser} from "./actions/users";
+import {setAuthedUser} from './actions/users';
+import NewQuestion from './components/new-question';
+import Question from './components/question'
 
 class App extends React.Component {
     componentDidMount() {
@@ -33,6 +35,8 @@ class App extends React.Component {
                             <Route exact path='/' component={authedUser ? Dashboard : Login}/>
                             {/*<Route path='/new' component={authedUser ? Dashboard : Login}/>*/}
                             <Route path='/result/:id' component={authedUser ? Dashboard : Login}/>
+                            <Route path='/question/:id' component={authedUser ? Question : Login}/>
+                            <Route path='/add' render={() => authedUser ? <NewQuestion dispatch={this.props.dispatch}/> : <Login/>}/>
 
                             {/* Credit text for avatar icons*/}
                             <div className="credit-text">Avatar icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik </a>

@@ -1,4 +1,5 @@
 @import "mixins"
+@import "form"
 
 body
   background-color: #ECEFF1
@@ -6,14 +7,17 @@ body
   padding: 0
   margin: 0
 
-body, h1, h2, h2, h3, h4, h5, h6
+body, h1, h2, h2, h3, h4, h5, h6, button
   font-family: "Open Sans", sans-serif
+  padding: 0
+  margin: 0
 
 h3, h4, h5, h6
   font-weight: 400
 
-h2
-    color: #ffa100
+h2, h4
+  font-weight: 600
+  color: #ffa100
 
 h2, h3
   text-align: center
@@ -38,3 +42,5 @@ button.is-positive
 button.is-negative
   @include button('negative')
 
+button.is-neutral
+  @include button('neutral')

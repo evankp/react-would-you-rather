@@ -1,17 +1,23 @@
-import React, {Fragment} from 'react';
-import {connect} from "react-redux";
+import React from 'react'
+import {connect} from 'react-redux'
 
 import HeaderBar from './header-bar'
-import Choice from "./question-choice";
 
-const sample = require('lodash.sample');
+import '../sass/dashboard.sass'
+import QuestionListItem from "./question-list-item"
 
 class Dashboard extends React.Component {
-    render() {
-        const {dispatch, authedUser, questionAuthor, users, questions, randomQuestion, match: {path, params}} = this.props;
-        const user = users[authedUser];
+    state = {
+        activeTab: 'new'
+    }
 
-        const question = path.includes('/result') ? questions[params.id] : randomQuestion;
+    handleSwitchTabs = e => {
+        e.preventDefault()
+        this.setState({activeTab: e.target.id})
+    }
+
+    render() {
+        const {newQuestions, answeredQuestions} = this.props
 
         return (
             <div className="box full-sized">
@@ -21,62 +27,62 @@ class Dashboard extends React.Component {
 
                 <section>
                     <header>
-                        <h2>Would you Rather?</h2>
+                        <h2>Questions</h2>
                     </header>
 
-                    {questionAuthor && (
-                        <div id="author-details">
-                            <div>
-                                <img className="avatar" src={`/avatar/${questionAuthor.avatarURL}.svg`}
-                                     alt={`${questionAuthor.name} avatar`}/>
-                                <span>{questionAuthor.id === user.id ? 'You' : questionAuthor.name}</span>
+                    <article>
+                        <div id="tab-controls">
+                            <div className={this.state.activeTab === 'new' ? 'tab-select active' : 'tab-select'}
+                                onClick={this.handleSwitchTabs}>
+                                <h3 id="new">New</h3>
+                            </div>
+                            <div className={this.state.activeTab === 'answered' ? 'tab-select active' : 'tab-select'}
+                                onClick={this.handleSwitchTabs}>
+                                <h3 id="answered">Answered</h3>
                             </div>
                         </div>
-                    )}
 
-                    <article className="question-box">
-                        {question !== undefined
-                            ? <Fragment>
-                                <Choice choice="A" question={question} dispatch={dispatch} authedUser={authedUser}/>
-                                <div className="or-text">
-                                    <span>OR</span>
-                                </div>
-                                <Choice choice="B" question={question} dispatch={dispatch} authedUser={authedUser}/>
-                            </Fragment>
-                            : <span className="answer">No Questions Found</span>}
+                        <ul id="tab-list">
+                            {this.state.activeTab === 'new'
+                            ? newQuestions.map(question => (
+                                <QuestionListItem key={question.id} question={question}/>
+                            ))
+                            : answeredQuestions.map(question => (
+                                <QuestionListItem key={question.id} question={question}/>
+                            ))}
+                        </ul>
                     </article>
-                    {path.includes('/result') && (
-                        <div className="center">
-                            <button className="is-positive" onClick={() => this.props.history.push('/')}>
-                                New Question
-                            </button>
-                        </div>
-                    )}
+
                 </section>
             </div>
         )
     }
 }
 
-function mapStateToProps({authedUser, users, questions}, ownProps) {
-    function getRandomQuestion() {
-        let questionIds = Object.keys(questions);
-        let unansweredQuestions = questionIds.filter(id => {
-            let question = questions[id];
-            return (!question.optionOne.votes || !question.optionOne.votes.includes(authedUser)) &&
-                (!question.optionTwo.votes || !question.optionTwo.votes.includes(authedUser))
-        });
+function mapStateToProps({authedUser, users, questions}) {
+    function sortQuestions() {
+        let unansweredQuestionIds = Object.keys(questions).filter(question => (
+            (!questions[question].optionOne.votes || questions[question].optionOne.votes.indexOf(authedUser) === -1) &&
+            (!questions[question].optionTwo.votes || questions[question].optionTwo.votes.indexOf(authedUser) === -1))
+        )
 
-        return questions[sample(unansweredQuestions)]
+        let answeredQuestionIds = Object.keys(questions).filter(question => (
+            (questions[question].optionOne.votes && questions[question].optionOne.votes.indexOf(authedUser) !== -1) ||
+            (questions[question].optionTwo.votes && questions[question].optionTwo.votes.indexOf(authedUser) !== -1))
+        )
+
+        return {
+            unansweredQuestions: unansweredQuestionIds.map(question => questions[question]),
+            answeredQuestions: answeredQuestionIds.map(question => questions[question])
+        }
     }
-
-    let randomQuestion = getRandomQuestion();
 
     return {
         authedUser,
         users,
         questions,
-        randomQuestion: randomQuestion,
+        newQuestions: sortQuestions().unansweredQuestions,
+        answeredQuestions: sortQuestions().answeredQuestions
     }
 }
 

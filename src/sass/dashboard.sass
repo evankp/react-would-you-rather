@@ -1,0 +1,63 @@
+article
+  display: flex
+  flex-direction: column
+  align-items: center
+
+#tab-controls
+  display: flex
+  flex-direction: row
+  justify-content: center
+  width: 50%
+  margin: 20px auto
+
+.tab-select
+  cursor: pointer
+  background-color: #ebebeb
+  width: 100px
+
+  &.active
+    background-color: #00cc00
+
+    & a
+      color: #ffffff
+
+  &:first-of-type
+    border-radius: 5px 0 0 5px
+    padding: 10px 20px 10px 20px
+
+  &:last-of-type
+    border-radius: 0 5px 5px 0
+    padding: 10px 20px 10px 20px
+
+#tab-list
+  list-style: none
+  padding: 5px
+  width: 50%
+
+.tab-item
+  padding: 10px
+  border: 1px solid transparentize(#000, 0.8)
+  border-radius: 5px
+  display: flex
+  flex-direction: row
+  align-items: center
+  margin-bottom: 20px
+
+  .info
+    display: flex
+    flex-direction: column
+    align-content: center
+
+    .avatar
+      $size: 40px
+      width: $size
+      height: $size
+
+  .options
+    display: flex
+    flex-direction: column
+    width: 100%
+    margin: 20px 0
+
+  h4, h5, span, p
+    margin-top: 8px

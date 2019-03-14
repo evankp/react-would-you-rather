@@ -1,40 +1,49 @@
 import React from 'react'
 import {answerQuestion} from "../actions/questions"
 import PropTypes from 'prop-types'
-import {withRouter} from "react-router-dom"
 
 class Choice extends React.Component {
     static propTypes = {
         choice: PropTypes.string.isRequired,
         question: PropTypes.object.isRequired,
         dispatch: PropTypes.func.isRequired,
-        authedUser: PropTypes.string.isRequired
+        user: PropTypes.object.isRequired,
+        answered: PropTypes.bool.isRequired,
+        userChoice: PropTypes.string.isRequired
+    }
+
+    state = {
+        userChoice: 'none'
     }
 
     submitAnswer = (e, selection) => {
-        const {question, authedUser, dispatch} = this.props
+        const {question, user, dispatch} = this.props
 
         e.preventDefault()
 
-        dispatch(answerQuestion(question.id, selection, authedUser))
+        dispatch(answerQuestion(question.id, selection, user.id))
+        this.setState({userChoice: selection})
+    }
 
-        this.props.history.push(`/result/${question.id}`)
+    componentDidMount() {
+        this.setState({userChoice: this.props.userChoice})
     }
 
     render() {
-        const {question, choice, match: {path}} = this.props
-        const option = choice === 'A' ? 'optionOne' : 'optionTwo'
+        const {question, choice, answered} = this.props;
+        const option = choice === 'A' ? 'optionOne' : 'optionTwo';
 
         return (
             <div className="answer">
+                <h4>{this.state.userChoice === option ? 'Your Choice' : null}</h4>
                 <h3>{question[option].text}</h3>
-                {!path.includes('/result') && (
+                {!answered && (
                     <button className={choice === 'A' ? 'is-positive' : 'is-negative'}
                             onClick={e => this.submitAnswer(e, option)}>Choose
                     </button>
                 )}
 
-                {path.includes('/result') && (
+                {answered && (
                     <h3>{question[option].votes ? question[option].votes.length : 0}</h3>
                 )}
             </div>
@@ -42,4 +51,4 @@ class Choice extends React.Component {
     }
 }
 
-export default withRouter(Choice)
+export default Choice
