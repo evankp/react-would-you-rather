@@ -60,6 +60,8 @@ class Dashboard extends React.Component {
 }
 
 function mapStateToProps({authedUser, users, questions}) {
+    const decendingTime = (a, b) => b.timestamp - a.timestamp;
+
     function sortQuestions() {
         let unansweredQuestionIds = Object.keys(questions).filter(question => (
             (!questions[question].optionOne.votes || questions[question].optionOne.votes.indexOf(authedUser) === -1) &&
@@ -72,8 +74,8 @@ function mapStateToProps({authedUser, users, questions}) {
         )
 
         return {
-            unansweredQuestions: unansweredQuestionIds.map(question => questions[question]),
-            answeredQuestions: answeredQuestionIds.map(question => questions[question])
+            unansweredQuestions: unansweredQuestionIds.map(question => questions[question]).sort(decendingTime),
+            answeredQuestions: answeredQuestionIds.map(question => questions[question]).sort(decendingTime)
         }
     }
 
