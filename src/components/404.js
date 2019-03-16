@@ -1,5 +1,5 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 class NotFound extends React.Component {
     render() {
@@ -7,7 +7,7 @@ class NotFound extends React.Component {
             <div className="box">
                 <h1 className="center">404</h1>
                 <h3 className="center margin-bottom-large">The page/question you requested does not exist.</h3>
-                <Link to="/" className='center'>Home</Link>
+                <Link to="/" className="center">Home</Link>
             </div>
         )
     }

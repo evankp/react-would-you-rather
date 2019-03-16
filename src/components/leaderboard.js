@@ -1,9 +1,9 @@
-import React from "react";
-import HeaderBar from "./header-bar";
-import {connect} from "react-redux";
+import React from 'react';
+import HeaderBar from './header-bar';
+import {connect} from 'react-redux';
 
 import '../sass/leaderboard.sass'
-import UserBox from "./user-box"
+import UserBox from './user-box'
 
 class Leaderboard extends React.Component {
     render() {

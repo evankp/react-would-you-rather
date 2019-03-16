@@ -1,9 +1,9 @@
-import React, {Fragment} from 'react'
-import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
-import Choice from "./question-choice"
-import HeaderBar from "./header-bar"
+import Choice from './question-choice';
+import HeaderBar from './header-bar';
 
 class Question extends React.Component {
     render() {
@@ -11,7 +11,7 @@ class Question extends React.Component {
 
         if (question === undefined) return <Redirect to="/404"/>
         return (
-            <div className='box full-sized'>
+            <div className="box full-sized">
                 <HeaderBar/>
 
                 <div className="separator"/>

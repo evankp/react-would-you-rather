@@ -2,12 +2,12 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux'
 
-import HeaderBar from "./header-bar";
+import HeaderBar from './header-bar';
 import {saveQuestion} from '../utils/api';
 
 import '../sass/new-question.sass'
-import {updateCreatedQuestions} from "../actions/users"
-import {newQuestion} from "../actions/questions"
+import {updateCreatedQuestions} from '../actions/users'
+import {newQuestion} from '../actions/questions'
 
 class NewQuestion extends React.Component {
     state = {
@@ -46,11 +46,11 @@ class NewQuestion extends React.Component {
                         <h2>New Question</h2>
                     </header>
 
-                    <article className='center-form'>
+                    <article className="center-form">
                         <form onSubmit={this.handleSubmit}>
-                            <input id='optionOne' name='optionOne' placeholder='Option One' onChange={this.handleChange} required/>
-                            <input id='optionTwo' name='optionTwo' placeholder='Option Two' onChange={this.handleChange} required/>
-                            <button className='is-positive' disabled={!(this.state.optionOne && this.state.optionTwo)}>
+                            <input id="optionOne" name="optionOne" placeholder="Option One" onChange={this.handleChange} required/>
+                            <input id="optionTwo" name="optionTwo" placeholder="Option Two" onChange={this.handleChange} required/>
+                            <button className="is-positive" disabled={!(this.state.optionOne && this.state.optionTwo)}>
                                 Submit
                             </button>
                         </form>

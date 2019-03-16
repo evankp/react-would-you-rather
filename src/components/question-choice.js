@@ -1,7 +1,7 @@
-import React, {Fragment} from 'react'
-import {answerQuestion} from "../actions/questions"
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import React, {Fragment} from 'react';
+import {answerQuestion} from '../actions/questions';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 class Choice extends React.Component {
     static propTypes = {
@@ -45,7 +45,7 @@ class Choice extends React.Component {
                 <h4>{userChoice === option ? 'Your Choice' : null}</h4>
                 <h3>{question[option].text}</h3>
                 {!answered && (
-                    <button className={choice === 'A' ? 'is-positive' : 'is-negative'}
+                    <button className={choice === "A" ? "is-positive" : "is-negative"}
                             onClick={e => this.submitAnswer(e, option)}>Choose
                     </button>
                 )}

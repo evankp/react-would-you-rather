@@ -1,7 +1,7 @@
 import React from 'react'
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 
-import {setAuthedUser} from "../actions/users";
+import {setAuthedUser} from '../actions/users';
 
 class Login extends React.Component {
     state = {
@@ -26,7 +26,7 @@ class Login extends React.Component {
                 <select value={this.state.userSelect} className="user-select" onChange={this.onChange}
                         ref={select => this.select = select}>
 
-                    <option value='none' disabled={true}>-- Select User --</option>
+                    <option value="none" disabled={true}>-- Select User --</option>
                     {Object.keys(users).map(user => <option key={users[user].id} value={users[user].id}>
                         {users[user].name}
                     </option>)}

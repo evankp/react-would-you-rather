@@ -1,10 +1,10 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from 'react';
+import {connect} from 'react-redux';
 
-import HeaderBar from './header-bar'
+import HeaderBar from './header-bar';
 
-import '../sass/dashboard.sass'
-import QuestionListItem from "./question-list-item"
+import '../sass/dashboard.sass';
+import QuestionListItem from './question-list-item';
 
 class Dashboard extends React.Component {
     state = {
@@ -32,11 +32,11 @@ class Dashboard extends React.Component {
 
                     <article>
                         <div id="tab-controls">
-                            <div className={this.state.activeTab === 'new' ? 'tab-select active' : 'tab-select'}
+                            <div className={this.state.activeTab === "new" ? "tab-select active" : "tab-select"}
                                 onClick={this.handleSwitchTabs}>
                                 <h3 id="new">New</h3>
                             </div>
-                            <div className={this.state.activeTab === 'answered' ? 'tab-select active' : 'tab-select'}
+                            <div className={this.state.activeTab === "answered" ? "tab-select active" : "tab-select"}
                                 onClick={this.handleSwitchTabs}>
                                 <h3 id="answered">Answered</h3>
                             </div>
