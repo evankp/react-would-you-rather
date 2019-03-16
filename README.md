@@ -1,6 +1,6 @@
 # Would you rather? Project
 This is my version of Udacity's would you rather
-project for the react Nanodegree.
+project for the react Nanodegree. Uses create-react-app bootstrapper
 
 ## Getting Started
 While this project is not open source, feel free to take a look
