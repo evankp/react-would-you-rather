@@ -7,7 +7,6 @@ import UserBox from "./user-box"
 
 class Leaderboard extends React.Component {
     render() {
-        console.log(Date.now())
         return (
             <div className="box full-sized">
                 <HeaderBar/>
@@ -31,7 +30,7 @@ class Leaderboard extends React.Component {
     }
 }
 
-function mapStateToProps({users}, ownProps) {
+function mapStateToProps({users}) {
     function userArray() {
         let userList = Object.keys(users).map(user => users[user])
         userList.forEach(user => {

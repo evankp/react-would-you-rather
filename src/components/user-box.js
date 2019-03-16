@@ -8,7 +8,6 @@ class UserBox extends React.Component {
 
     render() {
         const {user} = this.props
-        console.log(user)
 
         return (
             <li className="user-box">

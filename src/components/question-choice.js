@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 import {answerQuestion} from "../actions/questions"
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 
 class Choice extends React.Component {
     static propTypes = {
@@ -9,10 +10,6 @@ class Choice extends React.Component {
         dispatch: PropTypes.func.isRequired,
         user: PropTypes.object.isRequired,
         answered: PropTypes.bool.isRequired,
-    }
-
-    state = {
-        userChoice: 'none'
     }
 
     submitAnswer = (e, selection) => {
@@ -24,13 +21,9 @@ class Choice extends React.Component {
         this.setState({userChoice: selection})
     }
 
-    componentDidMount() {
-        this.setState({userChoice: this.props.userChoice})
-    }
-
     render() {
-        const {question, choice, answered} = this.props;
-        const option = choice === 'A' ? 'optionOne' : 'optionTwo';
+        const {question, choice, answered, userChoice} = this.props
+        const option = choice === 'A' ? 'optionOne' : 'optionTwo'
 
         /*
         * 1. Any option one votes?
@@ -49,7 +42,7 @@ class Choice extends React.Component {
 
         return (
             <div className="answer">
-                <h4>{this.state.userChoice === option ? 'Your Choice' : null}</h4>
+                <h4>{userChoice === option ? 'Your Choice' : null}</h4>
                 <h3>{question[option].text}</h3>
                 {!answered && (
                     <button className={choice === 'A' ? 'is-positive' : 'is-negative'}
@@ -68,4 +61,17 @@ class Choice extends React.Component {
     }
 }
 
-export default Choice
+function mapStateToProps({questions, users, authedUser}, ownProps) {
+    const user = users[authedUser],
+        question = questions[ownProps.question]
+
+    return {
+        user,
+        answered: ownProps.answered,
+        question,
+        choice: ownProps.choice,
+        userChoice: user.answers ? user.answers[question.id] : 'none'
+    }
+}
+
+export default connect(mapStateToProps)(Choice)

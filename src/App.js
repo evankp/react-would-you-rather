@@ -35,11 +35,10 @@ class App extends React.Component {
                         ? null
                         : <Fragment>
                             <Route exact path='/' component={authedUser ? Dashboard : Login}/>
-                            <Route path='/404' render={() => <NotFound loggedUser={sessionStorage.getItem('loggedUser')}/>}/>
+                            <Route path='/404' component={NotFound}/>
                             <Route path='/leaderboard' component={authedUser ? Leaderboard : Login}/>
-                            <Route path='/result/:id' component={authedUser ? Dashboard : Login}/>
                             <Route path='/question/:id' component={authedUser ? Question : Login}/>
-                            <Route path='/add' render={() => authedUser ? <NewQuestion dispatch={this.props.dispatch}/> : <Login/>}/>
+                            <Route path='/add' component={authedUser ? NewQuestion : Login}/>
 
                             {/* Credit text for avatar icons*/}
                             <div className="credit-text">Database is reset daily</div>

@@ -1,13 +1,13 @@
-import React, {Fragment} from 'react';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import React, {Fragment} from 'react'
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
 import Choice from "./question-choice"
 import HeaderBar from "./header-bar"
 
 class Question extends React.Component {
     render() {
-        const {question, dispatch, user, questionAuthor, questionAnswered} = this.props
+        const {question, user, questionAuthor, questionAnswered} = this.props
 
         if (question === undefined) return <Redirect to="/404"/>
         return (
@@ -31,17 +31,13 @@ class Question extends React.Component {
                     )}
 
                     <article className="question-box">
-                        {question !== undefined
-                            ? <Fragment>
-                                <Choice choice="A" question={question} dispatch={dispatch} user={user}
-                                        answered={questionAnswered} userChoice={user.answers ? user.answers[question.id] : null}/>
-                                <div className="or-text">
-                                    <span>OR</span>
-                                </div>
-                                <Choice choice="B" question={question} dispatch={dispatch} user={user}
-                                        answered={questionAnswered} userChoice={user.answers ? user.answers[question.id] : null}/>
-                            </Fragment>
-                            : <span className="answer">No Questions Found</span>}
+                        <Fragment>
+                            <Choice choice="A" question={question.id} answered={questionAnswered}/>
+                            <div className="or-text">
+                                <span>OR</span>
+                            </div>
+                            <Choice choice="B" question={question.id} answered={questionAnswered}/>
+                        </Fragment>
                     </article>
                 </section>
             </div>
@@ -50,14 +46,14 @@ class Question extends React.Component {
 }
 
 function mapStateToProps({users, questions, authedUser}, ownProps) {
-    let question = questions[ownProps.match.params.id];
-    let user = users[authedUser];
+    let question = questions[ownProps.match.params.id]
+    let user = users[authedUser]
     let questionAnswered,
         questionAuthor
 
     if (question) {
         questionAnswered = !!((question.optionOne.votes && question.optionOne.votes.indexOf(user.id) !== -1) ||
-            (question.optionTwo.votes && question.optionTwo.votes.indexOf(user.id) !== -1));
+            (question.optionTwo.votes && question.optionTwo.votes.indexOf(user.id) !== -1))
 
         questionAuthor = users[question.author]
     }
