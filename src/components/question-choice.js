@@ -1,7 +1,6 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {answerQuestion} from "../actions/questions"
 import PropTypes from 'prop-types'
-import users from "../reducers/users"
 
 class Choice extends React.Component {
     static propTypes = {
@@ -10,7 +9,6 @@ class Choice extends React.Component {
         dispatch: PropTypes.func.isRequired,
         user: PropTypes.object.isRequired,
         answered: PropTypes.bool.isRequired,
-        userChoice: PropTypes.string.isRequired
     }
 
     state = {
@@ -60,7 +58,10 @@ class Choice extends React.Component {
                 )}
 
                 {answered && (
-                    <h3>{question[option].votes ? `${Math.round((question[option].votes.length / totalVotes) * 100)}%` : 0}</h3>
+                    <Fragment>
+                        <h3>{question[option].votes ? question[option].votes.length : 0}</h3>
+                        <h3>{question[option].votes ? `${Math.round((question[option].votes.length / totalVotes) * 100)}%` : '0%'}</h3>
+                    </Fragment>
                 )}
             </div>
         )

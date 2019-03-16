@@ -1,10 +1,17 @@
-import {GET_QUESTIONS, REMOVE_VOTE, UPDATE_VOTES} from "../reducers/questions";
+import {GET_QUESTIONS, NEW_QUESTION, REMOVE_VOTE, UPDATE_VOTES} from "../reducers/questions"
 import * as API from '../utils/api'
 
 export function getQuestions(questions) {
     return {
         type: GET_QUESTIONS,
         questions
+    }
+}
+
+export function newQuestion(question) {
+    return {
+        type: NEW_QUESTION,
+        question
     }
 }
 

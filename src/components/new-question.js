@@ -6,6 +6,8 @@ import HeaderBar from "./header-bar";
 import {saveQuestion} from '../utils/api';
 
 import '../sass/new-question.sass'
+import {updateCreatedQuestions} from "../actions/users"
+import {newQuestion} from "../actions/questions"
 
 class NewQuestion extends React.Component {
     state = {
@@ -23,7 +25,11 @@ class NewQuestion extends React.Component {
         e.preventDefault()
 
         saveQuestion(this.props.authedUser, this.state.optionOne, this.state.optionTwo)
-            .then(() => this.props.history.push('/'))
+            .then(question => {
+                this.props.dispatch(updateCreatedQuestions(this.props.authedUser, question.id))
+                this.props.dispatch(newQuestion(question))
+                this.props.history.push('/')
+            })
             .then(() => alert('Question added!'))
             .catch(err => console.log(err))
     }

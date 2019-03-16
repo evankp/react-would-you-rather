@@ -1,5 +1,5 @@
-import {GET_USERS} from "../reducers/users";
-import {CLEAR_AUTHED_USER, SET_AUTHED_USER} from "../reducers/authedUser";
+import {GET_USERS, UPDATE_CREATED_QUESTIONS} from "../reducers/users"
+import {CLEAR_AUTHED_USER, SET_AUTHED_USER} from "../reducers/authedUser"
 
 export function getUsers(users) {
     return {
@@ -18,5 +18,13 @@ export function setAuthedUser(id) {
 export function clearAuthedUser() {
     return {
         type: CLEAR_AUTHED_USER
+    }
+}
+
+export function updateCreatedQuestions(user, questionId) {
+    return {
+        type: UPDATE_CREATED_QUESTIONS,
+        user,
+        questionId
     }
 }

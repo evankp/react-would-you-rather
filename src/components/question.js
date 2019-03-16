@@ -1,5 +1,6 @@
-import React, {Fragment} from 'react'
-import {connect} from 'react-redux'
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 import Choice from "./question-choice"
 import HeaderBar from "./header-bar"
@@ -8,6 +9,7 @@ class Question extends React.Component {
     render() {
         const {question, dispatch, user, questionAuthor, questionAnswered} = this.props
 
+        if (question === undefined) return <Redirect to="/404"/>
         return (
             <div className='box full-sized'>
                 <HeaderBar/>
@@ -50,14 +52,20 @@ class Question extends React.Component {
 function mapStateToProps({users, questions, authedUser}, ownProps) {
     let question = questions[ownProps.match.params.id];
     let user = users[authedUser];
+    let questionAnswered,
+        questionAuthor
 
-    let questionAnswered = !!((question.optionOne.votes && question.optionOne.votes.indexOf(user.id) !== -1) ||
+    if (question) {
+        questionAnswered = !!((question.optionOne.votes && question.optionOne.votes.indexOf(user.id) !== -1) ||
             (question.optionTwo.votes && question.optionTwo.votes.indexOf(user.id) !== -1));
+
+        questionAuthor = users[question.author]
+    }
 
     return {
         user: user,
         question: question,
-        questionAuthor: users[questions[ownProps.match.params.id]],
+        questionAuthor,
         questionAnswered
     }
 }

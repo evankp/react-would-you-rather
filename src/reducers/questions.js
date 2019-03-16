@@ -1,4 +1,5 @@
 export const GET_QUESTIONS = 'GET_QUESTIONS';
+export const NEW_QUESTION = 'NEW_QUESTION';
 export const UPDATE_VOTES = 'UPDATE_VOTES';
 export const REMOVE_VOTE = 'REMOVE_VOTE';
 
@@ -11,6 +12,14 @@ export default function questions(state = {}, action) {
                 ...state,
                 ...action.questions
             };
+
+        case NEW_QUESTION:
+            return {
+                ...state,
+                [action.question.id]: {
+                    ...action.question
+                }
+            }
 
         case UPDATE_VOTES:
             option = state[action.id][action.option];

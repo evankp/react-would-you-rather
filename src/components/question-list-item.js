@@ -13,6 +13,7 @@ class QuestionListItem extends React.Component {
     render() {
         const {users, question} = this.props
         let time = new Date(question.timestamp);
+        time.setMonth(time.getMonth() + 1)
 
         return (
             <li key={question.id} className="tab-item">

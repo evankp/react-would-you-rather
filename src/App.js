@@ -10,6 +10,8 @@ import Dashboard from './components/dashboard';
 import {setAuthedUser} from './actions/users';
 import NewQuestion from './components/new-question';
 import Question from './components/question'
+import Leaderboard from "./components/leaderboard"
+import NotFound from "./components/404"
 
 class App extends React.Component {
     componentDidMount() {
@@ -33,12 +35,14 @@ class App extends React.Component {
                         ? null
                         : <Fragment>
                             <Route exact path='/' component={authedUser ? Dashboard : Login}/>
-                            {/*<Route path='/new' component={authedUser ? Dashboard : Login}/>*/}
+                            <Route path='/404' render={() => <NotFound loggedUser={sessionStorage.getItem('loggedUser')}/>}/>
+                            <Route path='/leaderboard' component={authedUser ? Leaderboard : Login}/>
                             <Route path='/result/:id' component={authedUser ? Dashboard : Login}/>
                             <Route path='/question/:id' component={authedUser ? Question : Login}/>
                             <Route path='/add' render={() => authedUser ? <NewQuestion dispatch={this.props.dispatch}/> : <Login/>}/>
 
                             {/* Credit text for avatar icons*/}
+                            <div className="credit-text">Database is reset daily</div>
                             <div className="credit-text">Avatar icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik </a>
                                 from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> is licensed by
                                 <a href="http://creativecommons.org/licenses/by/3.0/"title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer"> CC 3.0 BY</a></div>
